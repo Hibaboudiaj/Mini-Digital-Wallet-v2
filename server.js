@@ -1,16 +1,11 @@
 const express = require("express");
 const userRoutes = require("./routes/userRoutes");
-const walletRoutes = require("./routes/walletRoutes");
-const errorMiddleware = require("./middlewares/errorMiddleware");
+// const walletRoutes = require("./routes/walletRoutes");
 
 const app = express();
 
-app.use(express.json());
-
 // app.use("/users", userRoutes);
 // app.use("/wallets", walletRoutes);
-
-// app.use(errorMiddleware);
 
 app.get("/", (req, res) => {
   res.json({
