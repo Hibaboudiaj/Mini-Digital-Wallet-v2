@@ -1,12 +1,15 @@
+// controllers/walletController.js
+
 const { users, wallets } = require("../data/data");
-//--------------------CREATE WALLET---------------------//
+
+// CREATE WALLET
 exports.createWallet = (req, res) => {
   const { user_id, name } = req.body;
 
   const user = users.find((u) => u.id === user_id);
 
   if (!user) {
-    return res.status(400).json({ message: "L'utilisateur n'existe pas." });
+    return res.status(400).json({ message: "User does not exist" });
   }
 
   const newWallet = {
@@ -21,12 +24,12 @@ exports.createWallet = (req, res) => {
   res.status(201).json(newWallet);
 };
 
-//--------------------GET ALL WALLETS---------------------//
+// GET ALL WALLETS
 exports.getWallets = (req, res) => {
   res.status(200).json(wallets);
 };
 
-//--------------------GET WALLET BY ID---------------------//
+// GET WALLET BY ID
 exports.getWalletById = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -37,9 +40,9 @@ exports.getWalletById = (req, res) => {
   }
 
   res.status(200).json(wallet);
-}
+};
 
-//--------------------UPDATE WALLET---------------------//  
+// UPDATE WALLET
 exports.updateWallet = (req, res) => {
   const id = parseInt(req.params.id);
   const { name } = req.body;
@@ -55,7 +58,7 @@ exports.updateWallet = (req, res) => {
   res.status(200).json(wallet);
 };
 
-//--------------------DELETE WALLET---------------------//
+// DELETE WALLET
 exports.deleteWallet = (req, res) => {
   const id = parseInt(req.params.id);
 
@@ -70,7 +73,7 @@ exports.deleteWallet = (req, res) => {
   res.status(200).json({ message: "Wallet deleted" });
 };
 
-//--------------------DEPOSIT---------------------//
+// DEPOSIT
 exports.deposit = (req, res) => {
   const id = parseInt(req.params.id);
   const { amount } = req.body;
@@ -90,7 +93,7 @@ exports.deposit = (req, res) => {
   res.status(200).json(wallet);
 };
 
-//--------------------WITHDRAW---------------------//
+// WITHDRAW
 exports.withdraw = (req, res) => {
   const id = parseInt(req.params.id);
   const { amount } = req.body;

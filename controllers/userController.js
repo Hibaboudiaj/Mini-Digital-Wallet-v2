@@ -1,13 +1,13 @@
+// controllers/userController.js
+
 const { users } = require("../data/data");
 
-//--------------------CREATE USER---------------------//
+// CREATE USER
 exports.createUser = (req, res) => {
   const { name, email, phone } = req.body;
 
   if (!name || !email || !phone) {
-    return res
-      .status(400)
-      .json({ massege: "Tous les champs sont obligatoires" });
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   const newUser = {
@@ -22,18 +22,25 @@ exports.createUser = (req, res) => {
   res.status(201).json(newUser);
 };
 
-//--------------------GET USER BY ID---------------------//
+// GET ALL USERS
+exports.getUsers = (req, res) => {
+  res.status(200).json(users);
+};
+
+// GET USER BY ID
 exports.getUserById = (req, res) => {
   const id = parseInt(req.params.id);
+
   const user = users.find((u) => u.id === id);
 
   if (!user) {
-    return res.status(404).json({ massege: "Utilisateur introuvable" });
+    return res.status(404).json({ message: "User not found" });
   }
+
   res.status(200).json(user);
 };
 
-//--------------------UPDATE USER---------------------//
+// UPDATE USER
 exports.updateUser = (req, res) => {
   const id = parseInt(req.params.id);
   const { name, email, phone } = req.body;
@@ -41,7 +48,7 @@ exports.updateUser = (req, res) => {
   const user = users.find((u) => u.id === id);
 
   if (!user) {
-    return res.status(404).json({ message: "Utilisateur introuvable" });
+    return res.status(404).json({ message: "User not found" });
   }
 
   user.name = name || user.name;
@@ -51,17 +58,17 @@ exports.updateUser = (req, res) => {
   res.status(200).json(user);
 };
 
-//--------------------DELETE USER---------------------//
+// DELETE USER
 exports.deleteUser = (req, res) => {
-  const id = parent(req.params.id);
+  const id = parseInt(req.params.id);
 
   const index = users.findIndex((u) => u.id === id);
 
   if (index === -1) {
-    return res.status(404).json({ massege: "Utilisateur introuvable" });
+    return res.status(404).json({ message: "User not found" });
   }
 
   users.splice(index, 1);
 
-  res.status(200).json({message:"Utilisateur supprimé"})
+  res.status(200).json({ message: "User deleted" });
 };
